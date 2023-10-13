@@ -45,7 +45,7 @@ class productManager{
         const {title, description, price, thumbnail, code, stock} = datosProducto
         
         const checkCode = this.products.find(product => product.code == code)
-        const producValidation = title && description && price && thumbnail && code && stock !== undefined
+        const producValidation = title && description && price && thumbnail && code && stock
         
         if (!checkCode && producValidation ){
             const id = this.addIncrementId()
