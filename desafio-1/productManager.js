@@ -29,6 +29,14 @@ class productManager{
     }
 
     /**
+     * Devuelve los productos existentes
+     * @returns {Array} - arreglo de productos
+     */
+    getProduct(){
+        return this.products
+    }
+
+    /**
     * Crea un producto
     * @param {Object} a - un producto
     * @throws {Error} - si el code se repite o falta alguna propiedad
@@ -40,7 +48,7 @@ class productManager{
         const producValidation = title && description && price && thumbnail && code && stock !== undefined
         
         if (!checkCode && producValidation ){
-            const id = this.addIncrementId
+            const id = this.addIncrementId()
             const product = new Product({id, title, description, price, thumbnail, code, stock})
             this.products.push(product)
             console.log("Producto creado exitosamente.")
@@ -64,24 +72,20 @@ class productManager{
        }
     }
 
-    /**
-     * Devuelve los productos existentes
-     * @returns {Array} - arreglo de productos
-     */
-    getProduct(){
-        return this.products
-    }
 }
 
 // Instanciación de productManager
 const product_manager = new productManager
 
 //Primera ejecución de getProduct
-const productos1= product_manager.getProduct()
+console.log("\n\n\n1. Primera ejecución de getProduct")
+console.log("-----------------------------------\n")
+const productos1 = product_manager.getProduct()
 console.log(productos1)
 
-// 1ra ejecución método addProduct
-console.log(product_manager)
+// Primera ejecución método addProduct
+console.log("\n\n\n2. Primera ejecución método addProduct")
+console.log("---------------------------------------\n")
 product_manager.addProduct({
                                 title: "producto prueba", 
                                 description: "Este es un producto prueba", 
@@ -91,20 +95,27 @@ product_manager.addProduct({
                                 stock: 25
                             })
 
-//Ejecución de getProduct
+//Segunda ejecución de getProduct
+console.log("\n\n\n3. Segunda ejecución de getProduct")
+console.log("----------------------------------\n")
 const productos2 = product_manager.getProduct()
 console.log(productos2)
 
 //Ejecución de getProductById
+console.log("\n\n\n4. Ejecución de getProductById")
+console.log("-------------------------------\n")
 const producto = product_manager.getProductById(1)
+console.log(producto)
 
-// 2da ejecución método addProduct
-product_manager.addProduct = {
+// Segunda ejecución método addProduct
+console.log("\n\n\n5. Segunda ejecución método addProduct")
+console.log("--------------------------------------\n")
+product_manager.addProduct({
                                 title: "producto prueba", 
                                 description: "Este es un producto prueba", 
                                 price: 200, 
                                 thumbnail: "Sin imagen", 
                                 code: "abc123", 
                                 stock: 25
-                            }
+                            })
 
