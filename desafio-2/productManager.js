@@ -28,7 +28,7 @@ class productManager{
     async addIncrementId(){
         try {
             //Buscamos el id del último elemento en el array para incrementar
-            const products = JSON.parse(await fs.readFile(this.path))
+            const products = JSON.parse(await fs.readFile(this.path, 'utf-8'))
             const id = products[products.length - 1].id + 1
             return id
         } catch (error) {       
@@ -44,7 +44,7 @@ class productManager{
     async getProducts(){
         try {
             //Devolvemos todos los productos
-            return JSON.parse(await fs.readFile(this.path))
+            return JSON.parse(await fs.readFile(this.path, 'utf-8'))
         } catch (e) {
             //Si no hay producto retornamos array vacío
             return []
@@ -115,7 +115,7 @@ class productManager{
             //Buscamos producto a actualizar por id
             let productToUpdate = await this.getProductById(id)
 
-            //Si existe proseguimos sino lanza el error getProductById
+            //Si existe proseguimos, sino lanza el error getProductById
             if (productToUpdate){
 
                 //Obtenemos todos los productos
