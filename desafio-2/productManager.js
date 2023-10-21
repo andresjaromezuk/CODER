@@ -173,41 +173,46 @@ class productManager{
 
 async function productController(){
     
-    // Instanciación de productManager
-    const product_manager = new productManager('./products.json')
+    try {
 
-    //Get products
-    const emptyArray = await product_manager.getProducts()
-    console.log("No hay productos:", emptyArray)
+        // Instanciación de productManager
+        const product_manager = new productManager('./products.json')
     
-    //Create product
-    const product_1 = await product_manager.addProduct(
-        {
-            title: "producto prueba", 
-            description: "Este es un producto prueba", 
-            price: 200, 
-            thumbnail: "Sin imagen", 
-            code: "abc123", 
-            stock: 25
-        }
-    )
-    console.log("Primer producto creado:", product_1)
-
-    //Get products
-    const products = await product_manager.getProducts()
-    console.log("Productos disponibles:", products)
-
-    //Get product by id
-    const product = await product_manager.getProductById(1)
-    console.log("Producto encontrado:", product)
-
-    //Update product
-    await product_manager.updateProduct(1, 1000)
-
-    //Delete product
-    const product_deleted = await product_manager.deleteProduct(1)
-    console.log("Producto eliminado:", product_deleted.productToDelete)
-    console.log("Productos disponibles:", product_deleted.productDeleted)
+        //Get products
+        const emptyArray = await product_manager.getProducts()
+        console.log("No hay productos:", emptyArray)
+        
+        //Create product
+        const product_1 = await product_manager.addProduct(
+            {
+                title: "producto prueba", 
+                description: "Este es un producto prueba", 
+                price: 200, 
+                thumbnail: "Sin imagen", 
+                code: "abc123", 
+                stock: 25
+            }
+        )
+        console.log("Primer producto creado:", product_1)
+    
+        //Get products
+        const products = await product_manager.getProducts()
+        console.log("Productos disponibles:", products)
+    
+        //Get product by id
+        const product = await product_manager.getProductById(1)
+        console.log("Producto encontrado:", product)
+    
+        //Update product
+        await product_manager.updateProduct(1, 1000)
+    
+        //Delete product
+        const product_deleted = await product_manager.deleteProduct(1)
+        console.log("Producto eliminado:", product_deleted.productToDelete)
+        console.log("Productos disponibles:", product_deleted.productDeleted)
+    } catch (e) {
+        console.log(e.message)
+    }
     
 }
 
