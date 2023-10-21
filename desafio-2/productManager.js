@@ -76,7 +76,7 @@ class productManager{
                 products.push(product)
                 
                 //Guardamos producto
-                const productsJson = JSON.stringify(products)
+                const productsJson = JSON.stringify(products, null, 2)
                 await fs.writeFile(this.path, productsJson)
                 console.log("Producto creado exitosamente.")
                 return product
@@ -132,7 +132,7 @@ class productManager{
                 
                 //Se evalúa que tenga el mismo id
                 if (productToUpdate.id === id){
-                    const productsToUpdate = JSON.stringify(products)
+                    const productsToUpdate = JSON.stringify(products, null, 2)
                     await fs.writeFile(this.path, productsToUpdate) 
                     console.log("Producto actualizado", productToUpdate)
                     return productToUpdate
@@ -159,7 +159,7 @@ class productManager{
                 const productDeleted = products.filter(product => product.id !== id)
                 
                 //Guardamos el resto de los productos
-                const productsUpdated = JSON.stringify(productDeleted)
+                const productsUpdated = JSON.stringify(productDeleted, null, 2)
                 await fs.writeFile(this.path, productsUpdated) 
                 return {productToDelete, productDeleted}
             }else {
@@ -195,6 +195,7 @@ async function productController(){
         }
     )
     console.log("Primer producto creado:", product_1)
+    
     
     //Get products
     const products = await product_manager.getProducts()
