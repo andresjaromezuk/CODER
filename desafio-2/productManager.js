@@ -68,21 +68,20 @@ class productManager{
             const checkCode = products.find(product => product.code === code)
             const producValidation = title && description && price && thumbnail && code && stock
             
-            if (!checkCode && producValidation ){
-                
-                //Generemos id único y creamos producto
-                const id = await this.addIncrementId()
-                const product = new Product({id, title, description, price, thumbnail, code, stock})
-                products.push(product)
-                
-                //Guardamos producto
-                const productsJson = JSON.stringify(products, null, 2)
-                await fs.writeFile(this.path, productsJson)
-                console.log("Producto creado exitosamente.")
-                return product
-            } else {
+            if (checkCode || !producValidation ){ 
                 throw new Error("No se puede crear producto. Introduce todos los campos.")
-            }
+            } 
+
+            //Generemos id único y creamos producto
+            const id = await this.addIncrementId()
+            const product = new Product({id, title, description, price, thumbnail, code, stock})
+            products.push(product)
+            
+            //Guardamos producto
+            const productsJson = JSON.stringify(products, null, 2)
+            await fs.writeFile(this.path, productsJson)
+            console.log("Producto creado exitosamente.")
+            return product
         }
         catch(e){
             console.log(e.message)
@@ -99,11 +98,10 @@ class productManager{
         try {
             const products = await this.getProducts()
             const product = products.find(product => product.id === id)
-            if (product){
-             return product
-            } else {
-             throw new Error("Not Found")
+            if (!product){
+                throw new Error("Not Found")
             }
+            return product
         } catch (e) {
             console.log(e.message)
         }
@@ -131,15 +129,13 @@ class productManager{
                 products[index] = productToUpdate
                 
                 //Se evalúa que tenga el mismo id
-                if (productToUpdate.id === id){
-                    const productsToUpdate = JSON.stringify(products, null, 2)
-                    await fs.writeFile(this.path, productsToUpdate) 
-                    console.log("Producto actualizado", productToUpdate)
-                    return productToUpdate
-                } else{
+                if (!productToUpdate.id === id){
                     throw new Error("El producto tiene que tener el mismo id")
-                }
-
+                } 
+                const productsToUpdate = JSON.stringify(products, null, 2)
+                await fs.writeFile(this.path, productsToUpdate) 
+                console.log("Producto actualizado", productToUpdate)
+                return productToUpdate
             } 
         } catch (e) {
             console.log(e.message)
@@ -152,19 +148,20 @@ class productManager{
             //Buscamos producto para ver si existe el id
             let productToDelete = await this.getProductById(id)
         
-            if (productToDelete){
-                const products = await this.getProducts()
-
-                //Filtramos todos los productos excluyendo el id
-                const productDeleted = products.filter(product => product.id !== id)
-                
-                //Guardamos el resto de los productos
-                const productsUpdated = JSON.stringify(productDeleted, null, 2)
-                await fs.writeFile(this.path, productsUpdated) 
-                return {productToDelete, productDeleted}
-            }else {
+            if (!productToDelete){
                 throw new Error("El producto que buscas no existe")
             }
+
+            const products = await this.getProducts()
+
+            //Filtramos todos los productos excluyendo el id
+            const productDeleted = products.filter(product => product.id !== id)
+            
+            //Guardamos el resto de los productos
+            const productsUpdated = JSON.stringify(productDeleted, null, 2)
+            await fs.writeFile(this.path, productsUpdated) 
+            return {productToDelete, productDeleted}
+            
 
         } catch (e) {
             console.log(e.message)
@@ -195,8 +192,7 @@ async function productController(){
         }
     )
     console.log("Primer producto creado:", product_1)
-    
-    
+
     //Get products
     const products = await product_manager.getProducts()
     console.log("Productos disponibles:", products)
