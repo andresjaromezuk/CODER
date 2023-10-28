@@ -9,7 +9,7 @@ const PORT = 8080
 app.get('/products', async (req,res)=>{
     const limit = parseInt(req.query.limit)
     const products = await product_manager.getProducts(limit)
-    return res.json(products)
+    return res.status(200).json(products)
 })
 
 app.get('/products/:pid', async (req,res)=>{
