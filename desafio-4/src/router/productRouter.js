@@ -46,3 +46,14 @@ productRouter.put('/:pid',  async (req, res)=>{
         res.status(500).json({status: "Error", error: error.message})
     }
 })
+
+//Modificar producto
+productRouter.delete('/:pid',  async (req, res)=>{
+    try {
+        const {pid} = req.params
+        const product = await product_manager.deleteProduct(Number(pid))
+        return res.status(200).json({status: "Success", payload: product})
+    } catch (error) {
+        res.status(500).json({status: "Error", error: error.message})
+    }
+})

@@ -81,18 +81,5 @@
     "stock": 15,
     "status": true,
     "category": "productos"
-  },
-  {
-    "id": 8,
-    "title": "producto prueba",
-    "description": "Este es un producto prueba",
-    "price": 200,
-    "thumbnail": [
-      "/static/images/img.png"
-    ],
-    "code": "abc800",
-    "stock": 15,
-    "status": true,
-    "category": "productos"
   }
 ]

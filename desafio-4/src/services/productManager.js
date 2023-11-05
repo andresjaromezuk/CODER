@@ -115,6 +115,13 @@ export default class ProductManager{
         return product
     }
 
+     /**
+     * Actualiza un producto
+     * @param {number} a - un id
+     * @param {Object} a - Atributos de un producto
+     * @throws {Error} - si no existe el producto o los atributos están incompletos
+     * @returns {Object} - poducto actualizado
+     */
     async updateProduct(req){
         const {pid} = req.params
         const {body} = req
@@ -148,30 +155,26 @@ export default class ProductManager{
         
     }
 
+    /**
+     * Actualiza un producto
+     * @param {number} a - un id
+     * @throws {Error} - si no existe el producto
+     * @returns {Object} - poducto actualizado
+     */
     async deleteProduct(id){
-        try {
-            
-            //Buscamos producto para ver si existe el id
-            let productToDelete = await this.getProductById(id)
+
+        //Buscamos producto para ver si existe el id
+        let productToDelete = await this.getProductById(id)
+
+        const products = await this.getProducts()
+
+        //Filtramos todos los productos excluyendo el id
+        const productDeleted = products.filter(product => product.id !== id)
         
-            if (!productToDelete){
-                throw new Error("El producto que buscas no existe")
-            }
-
-            const products = await this.getProducts()
-
-            //Filtramos todos los productos excluyendo el id
-            const productDeleted = products.filter(product => product.id !== id)
-            
-            //Guardamos el resto de los productos
-            const productsUpdated = JSON.stringify(productDeleted, null, 2)
-            await fs.writeFile(this.path, productsUpdated) 
-            return {productToDelete, productDeleted}
-            
-
-        } catch (e) {
-            console.log(e.message)
-        }
+        //Guardamos el resto de los productos
+        const productsUpdated = JSON.stringify(productDeleted, null, 2)
+        await fs.writeFile(this.path, productsUpdated) 
+        return productToDelete
     }
 
 }
