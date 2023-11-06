@@ -1,4 +1,3 @@
-import ProductManager from './services/productManager.js'
 import express, { json, urlencoded } from 'express'
 import {apiRouter} from './router/apiRouter.js'
 
