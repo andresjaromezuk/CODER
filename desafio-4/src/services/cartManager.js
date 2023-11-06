@@ -1,8 +1,8 @@
 import fs from 'fs/promises'
-import Product from '../models/product.js'
+import Cart from '../models/cart.js'
 
-export default class ProductManager{
-    static productId = 1
+export default class CartManager{
+    static carttId = 1
 
     constructor(path){
         this.path = path
@@ -11,61 +11,30 @@ export default class ProductManager{
     //Métodos
 
     /**
-    * Valida que no se repita código de producto
-    * @param {Object} datosProducto - un producto con sus atributos
-    * @param {Array} products - Todos los productos 
-    * @throws {Error} - si el code se repite o falta alguna propiedad
-    */
-    #validateProductCode(datosProducto, products){
-        const {code} = datosProducto
-        //Validamos que no se repita el code 
-        const checkCode = products.find(product => product.code === code)        
-        if (checkCode){ 
-            throw new Error("No se puede crear producto. El código de producto ya existe.")
-        } 
-    }
-
-    /**
-    * Valida los campos de un producto
-    * @param {Object} datosProducto - un producto con sus atributos
-    * @throws {Error} - si el code se repite o falta alguna propiedad
-    */
-    #validateAtributes(datosProducto){
-        const {title, description, price, thumbnail, code, stock, status, category} = datosProducto
-        
-        //Validamos que no se repita el code ni falten propiedades
-        const producValidation = title && description && price && code && stock && category && status
-        
-        if (!producValidation){ 
-            throw new Error("No se puede crear producto. Introduce todos los campos.")
-        }
-    }
-
-    /**
     * Genera un id autoincrementable 
     * @returns {number} - Id nuevo
     */
     async addIncrementId(){
         try {
             //Buscamos el id del último elemento en el array para incrementar
-            const products = JSON.parse(await fs.readFile(this.path, 'utf-8'))
-            const id = products[products.length - 1].id + 1
+            const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
+            const id = carts[carts.length - 1].id + 1
             return id
         } catch (error) {       
             //Si no hay productos retornamos un id inicial     
-            return ProductManager.productId++
+            return CartManager.carttId++
         }
     }
 
-    /**
-     * Devuelve los productos existentes
+      /**
+     * Devuelve los carritos existentes
      * @returns {Array} - arreglo de productos
      */
-    async getProducts(limit){
+      async #getCarts(){
         try {
             //Si el limit es = 0 devolvemos todos los productos sino la cantidad pedida
-            const products = JSON.parse(await fs.readFile(this.path, 'utf-8'))
-            return limit ? products.splice(0,limit): products
+            const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
+            return carts
         } catch (e) {
             console.log(e.message)
             //Si no hay producto retornamos array vacío
@@ -78,26 +47,70 @@ export default class ProductManager{
     * @param {Object} a - un producto
     * @throws {Error} - si el code se repite o falta alguna propiedad
     */
-    async addProduct(datosProducto){
+    async addProductToCart(req){
+        const {cid, pid} = req.params
+
+        //Traemos todos los carritos
+        const carts = await this.#getCarts()
+
+        //Buscamos el carrito en particular
+        const cart = carts.find(cart => cart.id === Number(cid))
+        if (!cart){
+            throw new Error("El carrito no existe")
+        }
         
-        //Traemos todos los productos
-        const products = await this.getProducts()
+        //Buscamos el producto en el carrito
+        const {products} = cart
+        const product = products.find(item => item.product === Number(pid))
 
-        //Validación de campos
-        this.#validateAtributes(datosProducto)
-        this.#validateProductCode(datosProducto, products)
+        //Si no existe lo agregamos al array y si existe modificamos cantidad
+        if (!product) {
+            products.push({
+                product: Number(pid),
+                quantity: 1
+            })
+        } else {
+            product.quantity += 1
+        }
+        
+        cart.products = products
 
+        //Buscamos le posición de carrito en el array
+        const index = carts.findIndex(cart => cart.id === Number(cid))
+
+        //Devolvemos carrito a la misma posición del array
+        carts[index] = cart
+        
+        //Guardamos carrito
+        const cartsJson = JSON.stringify(carts, null, 2)
+        await fs.writeFile(this.path, cartsJson)
+        console.log("Producto agregado exitosamente.")
+        return cart
+    }
+
+    /**
+    * Crea un carrito de compras
+    * @returns {Object} - Retorna el carrito creado
+    */
+    async createCart(){
+
+        //Buscamos todos los carritos o creamos un array vacío
+        const carts = await this.#getCarts()
+        
         //Generemos id único y creamos producto
         const id = await this.addIncrementId()
-        datosProducto.id = id
-        const product = new Product(datosProducto)
-        products.push(product)
+       
+        //Creamos carrito y lo agregamos en el array 
+        const products = []
+        const cart = new Cart({id, products})
+
+        carts.push(cart)
         
         //Guardamos producto
-        const productsJson = JSON.stringify(products, null, 2)
-        await fs.writeFile(this.path, productsJson)
-        console.log("Producto creado exitosamente.")
-        return product
+        const cartsJson = JSON.stringify(carts, null, 2)
+        await fs.writeFile(this.path, cartsJson)
+        console.log("Carrito creado exitosamente.")
+        return cart
     }
 
     /**
@@ -106,13 +119,15 @@ export default class ProductManager{
      * @throws {Error} - si no existe el id
      * @returns {Object} - produto encontrado
      */
-    async getProductById(id){
-        const products = await this.getProducts()
-        const product = products.find(product => product.id === id)
-        if (!product){
-            throw new Error("El producto no existe")
+
+    async getCartById(id){
+        const carts = await this.#getCarts()      
+        const cart = carts.find(cart => cart.id === id)
+        if (!cart){
+            throw new Error("El carrito no existe")
         }
-        return product
+        const {products} = cart
+        return products
     }
 
      /**
@@ -133,7 +148,7 @@ export default class ProductManager{
         const products = await this.getProducts()
 
         //Validación de campos
-        this.#validateAtributes(body)
+        //this.#validateAtributes(body)
 
         //Buscamos le posición de producto en el array
         const index = products.findIndex(product => product.id === Number(pid))
