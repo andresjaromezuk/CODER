@@ -4,7 +4,7 @@
     "title": "producto prueba 1",
     "description": "Este es un producto prueba",
     "price": 200,
-    "thumbnail": "/static/images/img.png",
+    "thumbnail": [],
     "code": "abc123",
     "stock": 10,
     "status": true,
@@ -15,7 +15,7 @@
     "title": "producto prueba 2",
     "description": "Este es un producto prueba",
     "price": 200,
-    "thumbnail": "Sin imagen",
+    "thumbnail": [],
     "code": "abc456",
     "stock": 25,
     "status": true,
@@ -26,7 +26,9 @@
     "title": "producto prueba 3",
     "description": "Este es un producto prueba",
     "price": 200,
-    "thumbnail": "Sin imagen",
+    "thumbnail": [
+      "/static/images/imgproduct_1699241051303.jpg"
+    ],
     "code": "abc789",
     "stock": 20,
     "status": true,
@@ -37,7 +39,7 @@
     "title": "producto prueba 4",
     "description": "Este es un producto prueba",
     "price": 200,
-    "thumbnail": "Sin imagen",
+    "thumbnail": [],
     "code": "abc321",
     "stock": 25,
     "status": true,
@@ -48,9 +50,7 @@
     "title": "producto prueba",
     "description": "Este es un producto prueba",
     "price": 200,
-    "thumbnail": [
-      "/static/images/img.png"
-    ],
+    "thumbnail": [],
     "code": "abc500",
     "stock": 15,
     "status": true,
@@ -61,9 +61,7 @@
     "title": "producto prueba",
     "description": "Este es un producto prueba",
     "price": 200,
-    "thumbnail": [
-      "/static/images/img.png"
-    ],
+    "thumbnail": [],
     "code": "abc600",
     "stock": 15,
     "status": true,
@@ -74,9 +72,7 @@
     "title": "producto prueba",
     "description": "Este es un producto prueba",
     "price": 200,
-    "thumbnail": [
-      "/static/images/img.png"
-    ],
+    "thumbnail": [],
     "code": "abc700",
     "stock": 15,
     "status": true,

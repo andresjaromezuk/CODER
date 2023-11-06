@@ -73,6 +73,25 @@ export default class ProductManager{
         }
     }
 
+    async addImageToProduct(req){
+        const {code} = req.body 
+        const {filename} = req.file
+
+        //Traemos todos los productos
+        const products = await this.getProducts()
+
+        //buscamos el producto por code y su índice en el array
+        const product = products.find(product => product.code === code)
+        const index = products.findIndex(product => product.code === code)
+        
+        //Agregamos la urn de la imagen al producto y lo guardamos
+        product.thumbnail.push(`/static/images/${filename}`)
+        products[index] = product
+        const productsToUpdate = JSON.stringify(products, null, 2)
+        await fs.writeFile(this.path, productsToUpdate) 
+        return product  
+    }
+
     /**
     * Crea un producto
     * @param {Object} a - un producto
