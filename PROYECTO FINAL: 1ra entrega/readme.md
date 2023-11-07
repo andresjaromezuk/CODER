@@ -1,6 +1,6 @@
 # PROYECTO FINAL: Primera entrega
 
-**Script para levanta servidor**: npm run test
+**Script para levantar servidor**: npm run test
 
 ### Implementación de multer:
 
@@ -15,6 +15,6 @@ image = tomate.jpg
 code = abc789
 ````
 
-La imagen se guardará en /static/images y se agregará la url de la imagen en el campo "thumbnail" del producto en cuestión.
+La imagen se guardará en /static/images y se agregará la url de la imagen en el campo "thumbnail" del producto en cuestión. 
 
 
