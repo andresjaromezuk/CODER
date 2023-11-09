@@ -18,7 +18,7 @@ boton.addEventListener('click', (e) =>{
     thumbnail: [], 
     code: code.value, 
     stock: stock.value, 
-    status:true.value,
+    status:true,
     category: "productos"
   }
   console.log(producto)

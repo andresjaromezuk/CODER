@@ -112,27 +112,5 @@
     "stock": 15,
     "status": true,
     "category": "productos"
-  },
-  {
-    "id": 11,
-    "title": "tomate",
-    "description": "perita",
-    "price": "1000",
-    "thumbnail": [],
-    "code": "abc787",
-    "stock": "15",
-    "status": true,
-    "category": "productos"
-  },
-  {
-    "id": 12,
-    "title": "lechuga",
-    "description": "mantecosa",
-    "price": "300",
-    "thumbnail": [],
-    "code": "abc325",
-    "stock": "5",
-    "status": true,
-    "category": "productos"
   }
 ]
