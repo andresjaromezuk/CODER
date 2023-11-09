@@ -1,0 +1,15 @@
+<h1>Conocé nuestros productos</h1>
+<ul>
+  {{#each products}}
+    <li> Producto: {{this.title}} </li>
+    <p>Code: {{this.code}}</p>
+    <p>Stock{{this.stock}}</p>
+    <div>
+      {{#if this.thumbnail.length}}
+        {{#each this.thumbnail}}
+          <img src="{{this}}" alt="">
+        {{/each}}
+      {{/if}}
+    </div>
+  {{/each}}
+</ul>
