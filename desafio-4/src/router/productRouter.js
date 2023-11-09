@@ -31,6 +31,9 @@ productRouter.post('/',  async (req,res)=>{
     try {
         const {body} = req
         const product = await product_manager.addProduct(body)
+        const ioServer = req.io
+        const products =  await product_manager.getProducts()
+        ioServer.sockets.emit('productos', products)
         return res.status(200).json({status: "Success", payload: product})
     } catch (error) {
         res.status(500).json({status: "Error", error: error.message})
