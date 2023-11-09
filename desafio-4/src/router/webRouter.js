@@ -35,6 +35,7 @@ webRouter.get('/realtimeproducts', async (req, res) =>{
           const products =  await product_manager.getProducts(limit)
           const ioServer = req.io
           ioServer.on('connection', async (socket)=>{
+               console.log("Cliente conectado")
                socket.emit('productos', products)
                socket.on('nuevoProducto', async (socket)=>{
                     console.log(socket)
