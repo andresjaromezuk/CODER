@@ -47,8 +47,7 @@ export default class CartManager{
     * @param {Object} a - un producto
     * @throws {Error} - si el code se repite o falta alguna propiedad
     */
-    async addProductToCart(req){
-        const {cid, pid} = req.params
+    async addProductToCart(cid, pid){
 
         //Traemos todos los carritos
         const carts = await this.#getCarts()

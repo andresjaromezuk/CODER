@@ -75,10 +75,8 @@ export default class ProductManager{
         }
     }
 
-    async addImageToProduct(req){
-        const {code} = req.body 
-        const {filename} = req.file
-
+    async addImageToProduct(code,filename){
+        
         //Traemos todos los productos
         const products = await this.getProducts()
 
@@ -143,9 +141,7 @@ export default class ProductManager{
      * @throws {Error} - si no existe el producto o los atributos están incompletos
      * @returns {Object} - poducto actualizado
      */
-    async updateProduct(req){
-        const {pid} = req.params
-        const {body} = req
+    async updateProduct(pid, body){   
 
         //Chequeamos si el producto existe
         await this.getProductById(Number(pid))

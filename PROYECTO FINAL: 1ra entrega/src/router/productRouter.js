@@ -40,7 +40,9 @@ productRouter.post('/',  async (req,res)=>{
 //Modificar producto
 productRouter.put('/:pid',  async (req, res)=>{
     try {
-        const product = await product_manager.updateProduct(req)
+        const {pid} = req.params
+        const {body} = req
+        const product = await product_manager.updateProduct(pid, body)
         return res.status(200).json({status: "Success", payload: product})
     } catch (error) {
         res.status(500).json({status: "Error", error: error.message})
