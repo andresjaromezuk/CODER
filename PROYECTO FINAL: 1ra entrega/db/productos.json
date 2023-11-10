@@ -4,9 +4,11 @@
     "title": "producto prueba 1",
     "description": "Este es un producto prueba",
     "price": 200,
-    "thumbnail": [],
-    "code": "abc123",
-    "stock": 20,
+    "thumbnail": [
+      "http://localhost:8080/static/images/imgproduct_1699620034156.jpg"
+    ],
+    "code": "abc3000",
+    "stock": 1,
     "status": true,
     "category": "productos"
   },
@@ -63,6 +65,17 @@
     "price": 200,
     "thumbnail": [],
     "code": "abc300",
+    "stock": 15,
+    "status": true,
+    "category": "productos"
+  },
+  {
+    "id": 7,
+    "title": "producto prueba",
+    "description": "Este es un producto prueba",
+    "price": 200,
+    "thumbnail": [],
+    "code": "abc3000",
     "stock": 15,
     "status": true,
     "category": "productos"
