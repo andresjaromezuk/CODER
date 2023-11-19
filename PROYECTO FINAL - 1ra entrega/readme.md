@@ -1,4 +1,4 @@
-# PROYECTO FINAL: Primera entrega
+# PROYECTO FINAL - Primera entrega
 
 **Script para levantar servidor**: npm run test
 
@@ -16,5 +16,3 @@ code = abc789
 ````
 
 La imagen se guardará en /static/images y se agregará la url de la imagen en el campo "thumbnail" del producto en cuestión. 
-
-
