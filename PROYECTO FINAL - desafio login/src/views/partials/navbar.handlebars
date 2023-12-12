@@ -1,0 +1,17 @@
+<header>
+  <nav>
+    {{#if user}}
+      <h3>¡Bienvenido {{user.firstName}}!</h3>
+      <p>Tu rol es {{user.rol}}</p>
+    <ul>
+      <li><a href="/users/profile">Tu perfil</a></li>
+      <li>
+        <form action="/sessions/logout?_method=delete" method="POST">
+          <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer"> Cerrar sesión</button>
+        </form>
+      </li>
+      
+    </ul>
+    {{/if}}
+  </nav>
+</header>
