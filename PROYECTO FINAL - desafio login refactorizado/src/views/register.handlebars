@@ -1,0 +1,29 @@
+<div>
+    <h1>Registrate</h1>
+    {{#if error}}
+        <p style="color: red;"> {{error}}</p>
+    {{/if}}
+    <form action="/users/register" method="POST">
+        <label for="">Nombre</label>
+        <input type="text" name="firstName">
+        <br>
+        <br>
+        <label for="">Apellido</label>
+        <input type="text" name="lastName">
+        <br>
+        <br>
+        <label for="">Email</label>
+        <input type="text" name="email">
+        <br>
+        <br>
+        <label for="">Edad</label>
+        <input type="text" name="age">
+        <br>
+        <br>
+        <label for="">Contraseña</label>
+        <input type="text" name="password">
+        <br>
+        <br>
+        <button type="submit">REGISTRARSE</button>
+    </form>
+</div>
